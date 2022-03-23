@@ -1,0 +1,86 @@
+html {
+	--page-background: #fff;
+	--line-background: #eee;
+}
+
+.graph circle.one {
+	--color: blue;
+	--value: 3;
+	--max: 4;
+}
+
+.graph circle.two {
+	--color: teal;
+	--value: 4;
+	--max: 6;
+}
+
+.graph circle.three {
+	--color: rebeccapurple;
+	--value: 6;
+	--max: 7;
+}
+
+.graph circle.four {
+	--color: green;
+	--value: 30;
+	--max: 100;
+}
+
+.graph circle.five {
+	--color: orange;
+	--value: 4;
+	--max: 10;
+}
+
+.graph circle.six {
+	--color: orangered;
+	--value: 7;
+	--max: 10;
+}
+
+///////////////////////////
+
+body {
+	margin: 0;
+	display: grid;
+	place-content: center;
+	height: 100vh;
+	background: var(--page-background, white);
+}
+
+svg {
+	width: 90vmin;
+	height: 90vmin;
+}
+
+circle {
+	fill: none;
+	stroke: var(--color, red);
+	stroke-width: 4;
+	stroke-linecap: round;
+	stroke-dasharray: calc(100px * var(--value, 0) / var(--max, 100)) 100;
+	transform: rotate(90deg);
+	transform-origin: 50% 50%;
+	.background & {
+		stroke: var(--line-background, white);
+		stroke-width: 5;
+		stroke-dasharray: none;
+	}
+	.graph & {
+		animation: circle 2s ease-in-out both;
+	}
+}
+@keyframes circle {
+	0% {
+		opacity: 0;
+		stroke-dasharray: 0 100;
+	}
+}
+
+@for $i from 1 through 6 {
+	circle:nth-child(#{$i}) {
+		--color: hsl(#{($i - 1) * 40} 100% 48%);
+		animation-delay: #{-0.2s * $i + 1.2s};
+	}
+}
